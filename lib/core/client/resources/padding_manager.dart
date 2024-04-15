@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/resources/values_manager.dart';
+import 'package:flutter_project/core/client/resources/values_manager.dart';
 
 final class PaddingManager extends EdgeInsets {
   const PaddingManager._() : super.all(0);

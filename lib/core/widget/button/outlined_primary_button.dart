@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/resources/shape_manager.dart';
+import 'package:flutter_project/core/client/resources/shape_manager.dart';
 
 class OutlinedPrimaryButton extends StatelessWidget {
   const OutlinedPrimaryButton({

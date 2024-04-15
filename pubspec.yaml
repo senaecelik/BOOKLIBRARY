@@ -53,9 +53,12 @@ dependencies:
   json_serializable: ^6.7.1
   dartz: ^0.10.1
 
-
-  flutter_barcode_scanner: ^2.0.0
-  qr_code_scanner: ^1.0.1
+  device_info_plus: ^10.0.1
+  package_info_plus: ^7.0.0
+  flutter_localizations:
+    sdk: flutter
+  firebase_ui_localizations: ^1.10.2
+  firebase_ui_auth: ^1.13.1
   
 
 

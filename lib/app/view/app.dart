@@ -1,16 +1,15 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/app/router/app_router.dart';
 import 'package:flutter_project/app/theme/app_theme_provider.dart';
 import 'package:flutter_project/app/theme/dark/app_dark_theme.dart';
 import 'package:flutter_project/app/theme/light/app_light_theme.dart';
 import 'package:flutter_project/data/repository/authentication/firebase_auth_manger.dart';
-import 'package:flutter_project/app/router/app_router.dart';
-import 'package:flutter_project/presentation/auth/forgot_password/view_model/cubit/forgot_password_cubit.dart';
-import 'package:flutter_project/presentation/auth/login/view_model/cubit/login_cubit.dart';
-import 'package:flutter_project/presentation/auth/register/view_model/cubit/register_cubit.dart';
 import 'package:provider/provider.dart';
+
+import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -21,7 +20,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   static final _appRouter = AppRouter();
-
 
   @override
   void initState() {
@@ -38,10 +36,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppThemeProvider>(
           create: (_) => AppThemeProvider(),
         ),
-        Provider<LoginCubit>(create: (_) => LoginCubit()),
-        Provider<RegisterCubit>(create: (_) => RegisterCubit()),
-        Provider<ForgotPasswordCubit>(create: (_) => ForgotPasswordCubit()),
-        
+        // Provider<LoginCubit>(create: (_) => LoginCubit()),
+        // Provider<RegisterCubit>(create: (_) => RegisterCubit()),
+        // Provider<ForgotPasswordCubit>(create: (_) => ForgotPasswordCubit()),
         StreamProvider(
             initialData: null,
             create: (context) => context.read<FirebaseAuthManager>().authState)
@@ -49,7 +46,14 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<AppThemeProvider>(
         builder: (context, value, child) {
           return MaterialApp.router(
-            localizationsDelegates: context.localizationDelegates,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              FirebaseUILocalizations.delegate,
+              EasyLocalization.of(context)!.delegate,
+
+            ],
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             routerConfig: _appRouter.config(),

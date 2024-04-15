@@ -7,8 +7,7 @@ import 'package:flutter_project/app/theme/app_theme_provider.dart';
 import 'package:flutter_project/app/language/locale_keys.g.dart';
 import 'package:flutter_project/data/repository/authentication/firebase_auth_manger.dart';
 import 'package:flutter_project/app/router/app_router.dart';
-import 'package:flutter_project/presentation/home/search_isbn/search_isbn_screen.dart';
-import 'package:flutter_project/resources/values_manager.dart';
+import 'package:flutter_project/core/client/resources/values_manager.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int screenIndex = 0;
   late bool showNavigationDrawer;
   int currentPageIndex = 0;
@@ -27,9 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late final firebaseUser = context.watch<User?>();
 
+  late final TabController _tabController;
+  final List<Map<String, dynamic>> chipsData = [
+    {"label": "Okundu", "selected": true},
+    {"label": "Okunmadı", "selected": false},
+    // İsterseniz buraya daha fazla veri ekleyebilirsiniz
+  ];
+
   @override
   void initState() {
-   
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -38,29 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        // leading: IconButton(
-        //     style: IconButton.styleFrom(
-        //         backgroundColor: Theme.of(context).splashColor),
-        //     onPressed: () {
-        //       if (scaffoldKey.currentState!.isDrawerOpen) {
-        //         scaffoldKey.currentState!.closeDrawer();
-        //       } else {
-        //         scaffoldKey.currentState!.openDrawer();
-        //       }
-        //     },
-        //     icon: Icon(Icons.menu)),
-        actions: [
-          IconButton(
-            onPressed: () {
-              
-            },
-            icon: CircleAvatar(
-                backgroundColor: Theme.of(context).splashColor,
-                child: firebaseUser!.photoURL != null
-                    ? Image.network(firebaseUser!.photoURL!)
-                    : const Icon(Icons.person_outline)),
-          )
-        ],
+   
         centerTitle: true,
         title: Text(LocaleKeys.home_title.tr()),
       ),
@@ -110,14 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Divider(),
             ),
           ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchIsbnScreen(),));
-
-        },
-        child: const Icon(Icons.pending),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: NavigationBar(
         labelBehavior: labelBehavior,
         selectedIndex: currentPageIndex,
@@ -132,23 +108,80 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.map),
-            icon: Icon(Icons.map_outlined),
-            label: 'Roadmap',
+           NavigationDestination(
+            selectedIcon: Icon(Icons.explore),
+            icon: Icon(Icons.explore_outlined),
+            label: 'Explore',
           ),
-          // NavigationDestination(
-          //   selectedIcon: Icon(Icons.search),
-          //   icon: Icon(Icons.search_outlined),
-          //   label: 'Explore',
-          // ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
+        
         ],
       ),
       body: <Widget>[
         /// Home page
-        _home(context),
-
+        ///
+        Column(
+          children: [
+            TabBar(
+                tabAlignment: TabAlignment.start,
+                physics: BouncingScrollPhysics(),
+                isScrollable: true,
+                controller: _tabController,
+                tabs: [
+                  Tab(text: 'Kitaplarım'),
+                  Tab(text: 'Raf düzenim'),
+                  Tab(text: "Okumak istediklerim"),
+                ]),
+            Expanded(
+              child: TabBarView(controller: _tabController, children: [
+                Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.08,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: chipsData.map((chipData) {
+                            return Padding(
+                              padding: EdgeInsets.only(left: AppPadding.p12),
+                              child: ChoiceChip(
+                                label: Text(chipData["label"]),
+                                selected: chipData["selected"],
+                                onSelected: (selected) {
+                                  // Seçim durumunu güncelleyebilirsiniz
+                                  // Örneğin, setState kullanarak yapılabilir.
+                                },
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          separatorBuilder:(context, index) => Divider(),
+                          itemCount: 2,
+                          itemBuilder: (context, index) => ListTile(
+                            leading: Image.network("https://m.media-amazon.com/images/I/81StSOpmkjL._AC_UF1000,1000_QL80_.jpg"),
+                            title: Text("1984"),
+                            subtitle: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [Text("George Orwell"), Text("352 pages")],),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+              ]),
+            )
+          ],
+        ),
         const Text("data"),
+        const Text("data"),
+
       ][currentPageIndex],
     );
   }
@@ -181,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Theme.of(context).textTheme.headlineSmall,
                           title: "Roadmap with Gemini",
                           leading: const Icon(Icons.messenger_outline_outlined),
-                          trailing: const Icon(Icons.arrow_outward_outlined),
+                          trailing: const Icon(Icons.book_outlined),
                           cardColor: Theme.of(context).colorScheme.background),
                     )),
                     Expanded(
@@ -193,7 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: () {},
                                 title: "Explore Other Roadmap",
                                 leading: const Icon(Icons.explore_outlined),
-                                trailing: const Icon(Icons.arrow_outward_outlined),
+                                trailing:
+                                    const Icon(Icons.arrow_outward_outlined),
                                 cardColor: Theme.of(context)
                                     .colorScheme
                                     .secondaryContainer),
@@ -203,8 +237,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: AppCard(
                                 onTap: () {},
                                 title: "My Roadmap Schedule",
-                                leading: const Icon(Icons.calendar_today_outlined),
-                                trailing: const Icon(Icons.arrow_outward_outlined),
+                                leading:
+                                    const Icon(Icons.calendar_today_outlined),
+                                trailing:
+                                    const Icon(Icons.arrow_outward_outlined),
                                 cardColor: Theme.of(context)
                                     .colorScheme
                                     .tertiaryContainer),

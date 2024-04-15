@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/resources/radius_manager.dart';
+import 'package:flutter_project/core/client/resources/radius_manager.dart';
 
 class ShapeManager {
   ShapeManager._();

@@ -1,7 +1,7 @@
 // ignore_for_file: overridden_fields
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project/resources/shape_manager.dart';
+import 'package:flutter_project/core/client/resources/shape_manager.dart';
 import 'package:flutter_project/core/widget/button/outlined_primary_button.dart';
 
 final class OutlinedIconPrimaryButton extends OutlinedPrimaryButton {

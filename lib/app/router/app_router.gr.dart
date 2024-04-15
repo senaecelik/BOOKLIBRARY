@@ -21,16 +21,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthWrapperScreen(),
       );
     },
-    CreateNewPasswordRoute.name: (routeData) {
+    EmailVerifyRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CreateNewPasswordScreen(),
-      );
-    },
-    ForgotPasswordRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ForgotPasswordScreen(),
+        child: const EmailVerifyScreen(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -81,29 +75,15 @@ class AuthWrapperRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [CreateNewPasswordScreen]
-class CreateNewPasswordRoute extends PageRouteInfo<void> {
-  const CreateNewPasswordRoute({List<PageRouteInfo>? children})
+/// [EmailVerifyScreen]
+class EmailVerifyRoute extends PageRouteInfo<void> {
+  const EmailVerifyRoute({List<PageRouteInfo>? children})
       : super(
-          CreateNewPasswordRoute.name,
+          EmailVerifyRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'CreateNewPasswordRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [ForgotPasswordScreen]
-class ForgotPasswordRoute extends PageRouteInfo<void> {
-  const ForgotPasswordRoute({List<PageRouteInfo>? children})
-      : super(
-          ForgotPasswordRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ForgotPasswordRoute';
+  static const String name = 'EmailVerifyRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
