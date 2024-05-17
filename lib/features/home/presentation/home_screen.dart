@@ -2,12 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_project/app/theme/app_theme_provider.dart';
 import 'package:flutter_project/app/language/locale_keys.g.dart';
-import 'package:flutter_project/app/router/app_router.dart';
-import 'package:flutter_project/features/auth/data/data_source/remote/auth_data_source.dart';
 import 'package:flutter_project/features/book/prensentation/pages/book_widget.dart';
 import 'package:flutter_project/features/home/presentation/app_drawer.dart';
 
