@@ -7,12 +7,16 @@ class AppThemeProvider extends ChangeNotifier {
       Provider.of<AppThemeProvider>(context, listen: listen);
 
   ThemeMode _themeMode = ThemeMode.light;
-  
+
   ThemeMode get themeMode => _themeMode;
 
   bool get isDark => _themeMode == ThemeMode.dark;
 
-  void init() async {
+  AppThemeProvider() {
+    _init(); // Initialization when the AppThemeProvider instance is created
+  }
+
+  Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
 
     String? stringTheme = prefs.getString('theme');
@@ -25,8 +29,9 @@ class AppThemeProvider extends ChangeNotifier {
           'theme', ThemeMode.light.toString().split(".").last);
 
       _themeMode = ThemeMode.light;
+    } else {
+      _themeMode = theme;
     }
-    _themeMode = theme!;
 
     notifyListeners();
   }

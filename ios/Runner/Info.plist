@@ -47,6 +47,10 @@
 	<true/>
 	<!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
 	<!-- Google Sign-in Section -->
+	<key>GIDClientID</key>
+	<!-- TODO Replace this value: -->
+	<!-- Copied from GoogleService-Info.plist key CLIENT_ID -->
+	<string>[205766427957-8hf6u8e3rlg9cs80seufasqfhdkvq5rb.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

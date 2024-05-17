@@ -11,6 +11,7 @@
         "forgot_pass":"Fotgot Password?",
         "or_login_with":"Or Login With",
         "dont_you_have_an_account":"Don't you have an account?",
+        
         "register_now":"Register now"
     
     },
@@ -43,10 +44,10 @@
             }
         },
         "button":{
-            "save":"Kaydet",
+            "save":"Save",
             "sign_in_with_google":"Sign in with Google",
-            "login": "Giriş Yap",
-            "register": "Kayıt Ol"
+            "login": "Login",
+            "register": "Register"
         },
     
         "snackbar":{

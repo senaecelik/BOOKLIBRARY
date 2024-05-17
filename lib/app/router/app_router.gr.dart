@@ -21,10 +21,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthWrapperScreen(),
       );
     },
-    EmailVerifyRoute.name: (routeData) {
+    ForgotPasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const EmailVerifyScreen(),
+        child: const ForgotPasswordScreen(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -33,16 +33,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeScreen(),
       );
     },
-    LoginRoute.name: (routeData) {
+    SignUpRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoginScreen(),
+        child: const SignUpScreen(),
       );
     },
-    RegisterRoute.name: (routeData) {
+    SingInRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const RegisterScreen(),
+        child: const SingInScreen(),
       );
     },
     SplashRoute.name: (routeData) {
@@ -75,15 +75,15 @@ class AuthWrapperRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [EmailVerifyScreen]
-class EmailVerifyRoute extends PageRouteInfo<void> {
-  const EmailVerifyRoute({List<PageRouteInfo>? children})
+/// [ForgotPasswordScreen]
+class ForgotPasswordRoute extends PageRouteInfo<void> {
+  const ForgotPasswordRoute({List<PageRouteInfo>? children})
       : super(
-          EmailVerifyRoute.name,
+          ForgotPasswordRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'EmailVerifyRoute';
+  static const String name = 'ForgotPasswordRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -103,29 +103,29 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginScreen]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
+/// [SignUpScreen]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute({List<PageRouteInfo>? children})
       : super(
-          LoginRoute.name,
+          SignUpRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'LoginRoute';
+  static const String name = 'SignUpRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [RegisterScreen]
-class RegisterRoute extends PageRouteInfo<void> {
-  const RegisterRoute({List<PageRouteInfo>? children})
+/// [SingInScreen]
+class SingInRoute extends PageRouteInfo<void> {
+  const SingInRoute({List<PageRouteInfo>? children})
       : super(
-          RegisterRoute.name,
+          SingInRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'RegisterRoute';
+  static const String name = 'SingInRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

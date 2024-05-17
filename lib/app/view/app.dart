@@ -1,14 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/app/router/app_router.dart';
 import 'package:flutter_project/app/theme/app_theme_provider.dart';
 import 'package:flutter_project/app/theme/dark/app_dark_theme.dart';
 import 'package:flutter_project/app/theme/light/app_light_theme.dart';
-import 'package:flutter_project/data/repository/authentication/firebase_auth_manger.dart';
+import 'package:flutter_project/features/auth/data/data_source/remote/auth_data_source.dart';
+import 'package:flutter_project/features/book/prensentation/cubit/book/remote/remote_best_seller_book/remote_best_seller_book_cubit.dart';
+import 'package:flutter_project/injection_container.dart';
 import 'package:provider/provider.dart';
 
-import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MyApp extends StatefulWidget {
@@ -30,18 +33,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseAuthManager>(
-          create: (_) => FirebaseAuthManager(FirebaseAuth.instance),
+        Provider<FirebaseAuthDataSource>(
+          create: (_) => FirebaseAuthDataSource(FirebaseAuth.instance),
         ),
         ChangeNotifierProvider<AppThemeProvider>(
           create: (_) => AppThemeProvider(),
         ),
-        // Provider<LoginCubit>(create: (_) => LoginCubit()),
-        // Provider<RegisterCubit>(create: (_) => RegisterCubit()),
-        // Provider<ForgotPasswordCubit>(create: (_) => ForgotPasswordCubit()),
+        BlocProvider<RemoteBestSellerBookCubit>(create: (_) => sl()),
         StreamProvider(
             initialData: null,
-            create: (context) => context.read<FirebaseAuthManager>().authState)
+            create: (context) =>
+                context.read<FirebaseAuthDataSource>().getAuthStateChanges())
       ],
       child: Consumer<AppThemeProvider>(
         builder: (context, value, child) {
@@ -52,7 +54,6 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
               FirebaseUILocalizations.delegate,
               EasyLocalization.of(context)!.delegate,
-
             ],
             supportedLocales: context.supportedLocales,
             locale: context.locale,

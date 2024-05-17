@@ -5,7 +5,7 @@
     
     "login":{
         "title":"Tekrar hoş geldiniz! Sizi tekrar görmek güzel!",
-        "forgot_pass":"Şifremi Unuttum?",
+        "forgot_pass":"Şifrenizi mi unuttunuz?",
         "or_login_with":"Veya ile giriş yapın",
         "dont_you_have_an_account":"Hesabınız yok mu?",
         "register_now":"Şimdi kaydol"
