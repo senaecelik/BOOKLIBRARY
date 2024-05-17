@@ -174,6 +174,7 @@ class FirebaseAuthDataSource {
     } on FirebaseAuthException {
       rethrow;
     }
+    return null;
   }
 
   Stream<User?> getAuthStateChanges() {

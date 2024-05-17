@@ -29,6 +29,7 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   @override
   Future<ResponseModel?> signInWithGoogle() async {
     await _dataSource.signInWithGoogle();
+    return null;
     
   }
 
