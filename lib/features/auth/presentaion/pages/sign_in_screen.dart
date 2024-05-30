@@ -138,7 +138,7 @@ class _SingInScreenState extends State<SingInScreen> {
                 OutlinedPrimaryButton(
                     child: BlocConsumer<SignInCubit, SignInState>(
                       listener: (context, state) {
-                        state is SignInDone
+                        state is SignInSuccess
                             ? context.router.pushAndPopUntil(
                                 const HomeRoute(),
                                 predicate: (route) => false,
@@ -165,12 +165,12 @@ class _SingInScreenState extends State<SingInScreen> {
                   builder: (context, state) {
                     return state is SignInError
                         ? MessageText(
-                            message: state.errorMessage,
+                            message: state.message,
                           )
                         : const Spacer();
                   },
                 ),
-                SignInGoogleButton()
+                // SignInGoogleButton()
               ],
             ),
           ),

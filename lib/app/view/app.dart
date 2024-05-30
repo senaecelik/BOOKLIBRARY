@@ -8,6 +8,7 @@ import 'package:flutter_project/app/theme/app_theme_provider.dart';
 import 'package:flutter_project/app/theme/dark/app_dark_theme.dart';
 import 'package:flutter_project/app/theme/light/app_light_theme.dart';
 import 'package:flutter_project/features/auth/data/data_source/remote/auth_data_source.dart';
+import 'package:flutter_project/features/auth/presentaion/cubit/auth/auth_cubit.dart';
 import 'package:flutter_project/features/book/prensentation/cubit/book/remote/remote_best_seller_book/remote_best_seller_book_cubit.dart';
 import 'package:flutter_project/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -33,17 +34,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseAuthDataSource>(
-          create: (_) => FirebaseAuthDataSource(FirebaseAuth.instance),
-        ),
+        BlocProvider(create: (_) => sl<AuthCubit>()..appStarted(context)),
+
+        // Provider<FirebaseAuthDataSource>(
+        //   create: (_) => FirebaseAuthDataSource(FirebaseAuth.instance),
+        // ),
         ChangeNotifierProvider<AppThemeProvider>(
           create: (_) => AppThemeProvider(),
         ),
-        BlocProvider<RemoteBestSellerBookCubit>(create: (_) => sl()),
-        StreamProvider(
-            initialData: null,
-            create: (context) =>
-                context.read<FirebaseAuthDataSource>().getAuthStateChanges())
+        // BlocProvider<RemoteBestSellerBookCubit>(create: (_) => sl()),
       ],
       child: Consumer<AppThemeProvider>(
         builder: (context, value, child) {

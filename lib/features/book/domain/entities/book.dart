@@ -50,7 +50,9 @@ class ItemEntity extends Equatable {
 class VolumeInfoEntity extends Equatable {
   final String? title;
   final List<String>? authors;
+  final String? publisher;
   final String? publishedDate;
+  final String? description;
   final List<IndustryIdentifierEntity>? industryIdentifiers;
   final int? pageCount;
   final String? printType;
@@ -64,11 +66,14 @@ class VolumeInfoEntity extends Equatable {
   final String? previewLink;
   final String? infoLink;
   final String? canonicalVolumeLink;
+  final List<String>? categories;
 
   VolumeInfoEntity({
     this.title,
     this.authors,
+    this.publisher,
     this.publishedDate,
+    this.description,
     this.industryIdentifiers,
     this.pageCount,
     this.printType,
@@ -82,6 +87,7 @@ class VolumeInfoEntity extends Equatable {
     this.previewLink,
     this.infoLink,
     this.canonicalVolumeLink,
+    this.categories,
   });
 
   @override
@@ -89,8 +95,9 @@ class VolumeInfoEntity extends Equatable {
         title,
         authors,
         publishedDate,
+        publisher,
+        description,
         industryIdentifiers,
-        
         pageCount,
         printType,
         averageRating,
@@ -103,6 +110,7 @@ class VolumeInfoEntity extends Equatable {
         previewLink,
         infoLink,
         canonicalVolumeLink,
+        categories
       ];
 }
 

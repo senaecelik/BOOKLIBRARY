@@ -1,9 +1,12 @@
-import 'package:flutter_project/features/auth/data/data_source/remote/auth_data_source.dart';
+import 'package:flutter_project/features/auth/domain/entity/user_entity.dart';
 
 abstract class FirebaseAuthRepository {
-  Future<ResponseModel?> signInWithEmailAndPassword( String email, String password);
-  Future<ResponseModel?> createUserWithEmailAndPassword(String userName,String email, String password);
-  Future<String?> sendPasswordResetEmail(String email);
-  Future<ResponseModel?> signInWithGoogle();
+  Future<void> signInWithEmailAndPassword(UserEntity user);
+  Future<void> createUserWithEmailAndPassword(UserEntity user);
+  Future<void> sendPasswordResetEmail(String email);
+  Future<bool> isSignIn();
   Future<void> signOut();
+
+  Future<void> createUser(UserEntity user);
+  Future<String> getCurrentUid();
 }

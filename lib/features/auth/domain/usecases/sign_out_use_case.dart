@@ -7,7 +7,7 @@ class SignOutUseCase implements UseCase<void, void> {
   SignOutUseCase(this._firebaseAuthRepository);
 
   @override
-  Future<void> call({ void params}) async {
+  Future<void> call([void params]) async {
     return await _firebaseAuthRepository.signOut();
    
   }

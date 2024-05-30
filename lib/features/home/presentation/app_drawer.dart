@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/app/router/app_router.dart';
 import 'package:flutter_project/app/theme/app_theme_provider.dart';
-import 'package:flutter_project/features/auth/presentaion/cubit/sign_out/sign_out_cubit.dart';
-import 'package:flutter_project/injection_container.dart';
+import 'package:flutter_project/features/auth/presentaion/cubit/auth/auth_cubit.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({
@@ -17,12 +16,10 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  late SignOutCubit _signOutCubit;
   int selectedIndex = -1;
 
   @override
   void initState() {
-    _signOutCubit = sl<SignOutCubit>();
     super.initState();
   }
 
@@ -80,24 +77,13 @@ class _AppDrawerState extends State<AppDrawer> {
         return CupertinoAlertDialog(
           title: Text("Hesabından çıkış yap?"),
           actions: [
-            BlocProvider<SignOutCubit>.value(
-              value: _signOutCubit,
-              child: BlocListener<SignOutCubit, SignOutState>(
-                listener: (context, state) {
-                  state is SignOutDone
-                      ? _navigateToSplashScreen(context)
-                      : state is SignOutError
-                          ? _showSignOutErrorDialog(context, state)
-                          : null;
+            CupertinoDialogAction(
+                isDestructiveAction: true,
+                onPressed: () {
+                  BlocProvider.of<AuthCubit>(context).loggedOut();
+                  _navigateToSplashScreen(context);
                 },
-                child: CupertinoDialogAction(
-                    isDestructiveAction: true,
-                    onPressed: () {
-                      _signOutCubit.signOut();
-                    },
-                    child: Text("Evet")),
-              ),
-            ),
+                child: Text("Evet")),
             CupertinoDialogAction(
                 isDestructiveAction: false,
                 onPressed: () {
@@ -110,27 +96,29 @@ class _AppDrawerState extends State<AppDrawer> {
     );
   }
 
-  Future<dynamic> _showSignOutErrorDialog(BuildContext context, SignOutError state) {
+  Future<dynamic> _showSignOutErrorDialog(
+    BuildContext context,
+  ) {
     return showAdaptiveDialog(
-                            context: context,
-                            builder: (context) => CupertinoAlertDialog(
-                                  title: Text("Uyarı"),
-                                  content: Text("Lütfen tekrar deneyiniz.\n${state.errorMessage}"),
-                                  actions: [
-                                    CupertinoDialogAction(
-                                        onPressed: () {
-                                          context.router.maybePop();
-                                        },
-                                        child: Text("Tamam")),
-                                  ],
-                                ));
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+              title: Text("Uyarı"),
+              content: Text("Lütfen tekrar deneyiniz.\n"),
+              actions: [
+                CupertinoDialogAction(
+                    onPressed: () {
+                      context.router.maybePop();
+                    },
+                    child: Text("Tamam")),
+              ],
+            ));
   }
 
   Future<Object?> _navigateToSplashScreen(BuildContext context) {
     return context.router.pushAndPopUntil(
-                        const WelcomeRoute(),
-                        predicate: (route) => false,
-                      );
+      const WelcomeRoute(),
+      predicate: (route) => false,
+    );
   }
 }
 

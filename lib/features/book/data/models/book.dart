@@ -79,6 +79,8 @@ class VolumeInfoModel extends VolumeInfoEntity {
   final String? title;
   final List<String>? authors;
   final String? publishedDate;
+  final String? publisher;
+  final String? description;
   final List<IndustryIdentifierModel>? industryIdentifiers;
   final int? pageCount;
   final String? printType;
@@ -92,11 +94,14 @@ class VolumeInfoModel extends VolumeInfoEntity {
   final String? previewLink;
   final String? infoLink;
   final String? canonicalVolumeLink;
+  final List<String>? categories;
 
   VolumeInfoModel({
     this.title,
     this.authors,
+    this.publisher,
     this.publishedDate,
+  this. description,
     this.industryIdentifiers,
     this.pageCount,
     this.printType,
@@ -110,6 +115,7 @@ class VolumeInfoModel extends VolumeInfoEntity {
     this.previewLink,
     this.infoLink,
     this.canonicalVolumeLink,
+    this.categories,
   });
 
   factory VolumeInfoModel.fromJson(Map<String, dynamic> json) =>
@@ -119,6 +125,8 @@ class VolumeInfoModel extends VolumeInfoEntity {
             ? []
             : List<String>.from(json["authors"]!.map((x) => x)),
         publishedDate: json["publishedDate"],
+        publisher: json["publisher"],
+        description: json["description"],
         industryIdentifiers: json["industryIdentifiers"] == null
             ? []
             : List<IndustryIdentifierModel>.from(json["industryIdentifiers"]!
@@ -137,6 +145,9 @@ class VolumeInfoModel extends VolumeInfoEntity {
         previewLink: json["previewLink"],
         infoLink: json["infoLink"],
         canonicalVolumeLink: json["canonicalVolumeLink"],
+         categories: json["categories"] == null
+            ? []
+            : List<String>.from(json["categories"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -145,6 +156,8 @@ class VolumeInfoModel extends VolumeInfoEntity {
             authors == null ? [] : List<dynamic>.from(authors!.map((x) => x)),
         "publishedDate":
            publishedDate,
+          "publisher":publisher,
+          "decription": description,
         "industryIdentifiers": industryIdentifiers == null
             ? []
             : List<dynamic>.from(industryIdentifiers!.map((x) => x.toJson())),
@@ -160,6 +173,7 @@ class VolumeInfoModel extends VolumeInfoEntity {
         "previewLink": previewLink,
         "infoLink": infoLink,
         "canonicalVolumeLink": canonicalVolumeLink,
+        "categories": categories == null ? []: List<dynamic>.from(categories!.map((x) => x))
       };
 }
 

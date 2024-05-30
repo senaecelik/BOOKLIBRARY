@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppThemeProvider extends ChangeNotifier {
+
+
   static AppThemeProvider state(BuildContext context, [bool listen = false]) =>
       Provider.of<AppThemeProvider>(context, listen: listen);
 

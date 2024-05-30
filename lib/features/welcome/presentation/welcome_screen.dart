@@ -17,10 +17,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider(
-      initialData: null,
-      create: (context) => context.read<FirebaseAuthDataSource>().getAuthStateChanges(),
-      child: Stack(
+    return Stack(
         children: [
           Scaffold(
             bottomNavigationBar: BottomAppBar(
@@ -58,7 +55,6 @@ class WelcomeScreen extends StatelessWidget {
           ),
 
         ],
-      ),
-    );
+      );
   }
 }
