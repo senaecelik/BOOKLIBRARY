@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/app/router/app_router.dart';
 import 'package:flutter_project/app/theme/app_theme_provider.dart';
-import 'package:flutter_project/features/auth/presentaion/cubit/auth/auth_cubit.dart';
+import 'package:flutter_project/features/auth/presentation/cubit/auth/auth_cubit.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({
@@ -75,7 +75,7 @@ class _AppDrawerState extends State<AppDrawer> {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: Text("Hesabından çıkış yap?"),
+          title: const Text("Hesabından çıkış yap?"),
           actions: [
             CupertinoDialogAction(
                 isDestructiveAction: true,
@@ -83,13 +83,13 @@ class _AppDrawerState extends State<AppDrawer> {
                   BlocProvider.of<AuthCubit>(context).loggedOut();
                   _navigateToSplashScreen(context);
                 },
-                child: Text("Evet")),
+                child: const Text("Evet")),
             CupertinoDialogAction(
                 isDestructiveAction: false,
                 onPressed: () {
                   context.router.maybePop();
                 },
-                child: Text("İptal")),
+                child: const Text("İptal")),
           ],
         );
       },
@@ -102,14 +102,14 @@ class _AppDrawerState extends State<AppDrawer> {
     return showAdaptiveDialog(
         context: context,
         builder: (context) => CupertinoAlertDialog(
-              title: Text("Uyarı"),
-              content: Text("Lütfen tekrar deneyiniz.\n"),
+              title: const Text("Uyarı"),
+              content: const Text("Lütfen tekrar deneyiniz.\n"),
               actions: [
                 CupertinoDialogAction(
                     onPressed: () {
                       context.router.maybePop();
                     },
-                    child: Text("Tamam")),
+                    child: const Text("Tamam")),
               ],
             ));
   }

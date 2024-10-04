@@ -27,9 +27,10 @@ final class AppDarkTheme implements AppTheme {
   );
   
  // TODO: implement elevatedButtonThemeData
+  @override
   ElevatedButtonThemeData get elevatedButtonThemeData => ElevatedButtonThemeData(
    style: ElevatedButton.styleFrom(
-    maximumSize: Size(double.infinity, 50)
+    maximumSize: const Size(double.infinity, 50)
    ) 
   );
 }

@@ -4,10 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/app/language/locale_keys.g.dart';
-import 'package:flutter_project/features/book/prensentation/pages/book_widget.dart';
+import 'package:flutter_project/app/router/app_router.dart';
 import 'package:flutter_project/features/home/presentation/app_drawer.dart';
 
 import 'package:flutter_project/resources/values_manager.dart';
+import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -17,8 +18,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int screenIndex = 0;
   late bool showNavigationDrawer;
   int currentPageIndex = 0;
@@ -50,7 +50,40 @@ class _HomeScreenState extends State<HomeScreen>
         centerTitle: true,
         title: Text(LocaleKeys.home_title.tr()),
       ),
-drawer: AppDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            useSafeArea: true,
+            context: context,
+            builder: (context) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Iconsax.search_favorite),
+                  title: const Text("Kitap adına göre ara"),
+                  onTap: () {
+                    context.router.push(const FindBookRoute());
+                  },
+                ),
+                ListTile(
+                  onTap: () {
+                    context.router.push(const FindIsbnBookRoute());
+                  },
+                  leading: const Icon(Iconsax.barcode),
+                  title: const Text("Kitap ISBN'sini ara"),
+                ),
+                const ListTile(
+                  leading: Icon(Iconsax.book),
+                  title: Text("Manuel olarak kitap ekle"),
+                ),
+              ],
+            ),
+          );
+        },
+        child: const Icon(Iconsax.search_normal),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      drawer: const AppDrawer(),
       bottomNavigationBar: NavigationBar(
         labelBehavior: labelBehavior,
         selectedIndex: currentPageIndex,
@@ -61,18 +94,18 @@ drawer: AppDrawer(),
         },
         destinations: const <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Iconsax.home_15),
+            icon: Icon(Iconsax.home),
             label: 'Home',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.explore),
-            icon: Icon(Icons.explore_outlined),
+            selectedIcon: Icon(Iconsax.book),
+            icon: Icon(Iconsax.book),
             label: 'Explore',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.person),
-            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Iconsax.user),
+            icon: Icon(Iconsax.user),
             label: 'Profile',
           ),
         ],
@@ -84,10 +117,10 @@ drawer: AppDrawer(),
           children: [
             TabBar(
                 tabAlignment: TabAlignment.start,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 isScrollable: true,
                 controller: _tabController,
-                tabs: [
+                tabs: const [
                   Tab(text: 'Kitaplarım'),
                   Tab(text: 'Raf düzenim'),
                   Tab(text: "Okumak istediklerim"),
@@ -118,8 +151,8 @@ drawer: AppDrawer(),
                     // Expanded(child: BookWidget())
                   ],
                 ),
-                Text("data"),
-                Text("data")
+                const Text("data"),
+                const Text("data")
               ]),
             )
           ],
@@ -127,11 +160,10 @@ drawer: AppDrawer(),
         SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPadding.p8),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              
                 // Text(
                 //   "Kategoriler",
                 //   style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -143,7 +175,7 @@ drawer: AppDrawer(),
             ),
           ),
         ),
-        Text("data")
+        const Text("data")
       ][currentPageIndex],
     );
   }
@@ -177,7 +209,7 @@ drawer: AppDrawer(),
                           title: "Roadmap with Gemini",
                           leading: const Icon(Icons.messenger_outline_outlined),
                           trailing: const Icon(Icons.book_outlined),
-                          cardColor: Theme.of(context).colorScheme.background),
+                          cardColor: Theme.of(context).colorScheme.surface),
                     )),
                     Expanded(
                       child: Column(
@@ -301,7 +333,3 @@ class AppCard extends StatelessWidget {
     );
   }
 }
-
-
-
-

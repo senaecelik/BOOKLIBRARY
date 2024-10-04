@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +6,7 @@ import 'package:flutter_project/app/router/app_router.dart';
 import 'package:flutter_project/app/theme/app_theme_provider.dart';
 import 'package:flutter_project/app/theme/dark/app_dark_theme.dart';
 import 'package:flutter_project/app/theme/light/app_light_theme.dart';
-import 'package:flutter_project/features/auth/data/data_source/remote/auth_data_source.dart';
-import 'package:flutter_project/features/auth/presentaion/cubit/auth/auth_cubit.dart';
-import 'package:flutter_project/features/book/prensentation/cubit/book/remote/remote_best_seller_book/remote_best_seller_book_cubit.dart';
+import 'package:flutter_project/features/auth/presentation/cubit/auth/auth_cubit.dart';
 import 'package:flutter_project/injection_container.dart';
 import 'package:provider/provider.dart';
 

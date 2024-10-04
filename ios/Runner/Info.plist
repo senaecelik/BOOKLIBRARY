@@ -65,5 +65,11 @@
 		</dict>
 	</array>
 	<!-- End of the Google Sign-in Section -->
+
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to scan QR codes</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs photos access to get QR code from photo library</string>
 </dict>
 </plist>

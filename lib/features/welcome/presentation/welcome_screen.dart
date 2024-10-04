@@ -3,12 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/app/language/locale_keys.g.dart';
 import 'package:flutter_project/app/utils/package_info/package_info.dart';
-import 'package:flutter_project/features/auth/data/data_source/remote/auth_data_source.dart';
 import 'package:flutter_project/app/router/app_router.dart';
 import 'package:flutter_project/resources/values_manager.dart';
 import 'package:flutter_project/widget/button/filled_primary_button.dart';
 import 'package:flutter_project/widget/button/outlined_primary_button.dart';
-import 'package:provider/provider.dart';
 
 
 @RoutePage()

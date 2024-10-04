@@ -2,12 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_project/features/auth/domain/entity/user_entity.dart';
 
 class UserModel extends UserEntity {
+  @override
   final String uid;
+  @override
   final String? username;
+  @override
   final String? name;
+  @override
   final String? email;
 
-  UserModel({
+  const UserModel({
     required this.uid,
     this.username,
     this.name,

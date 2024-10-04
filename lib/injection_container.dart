@@ -9,26 +9,30 @@ import 'package:flutter_project/features/auth/domain/usecases/create_user_use_ca
 import 'package:flutter_project/features/auth/domain/usecases/get_current_uid_use_case.dart';
 import 'package:flutter_project/features/auth/domain/usecases/is_sign_in_use_case.dart';
 import 'package:flutter_project/features/auth/domain/usecases/send_password_reset_email_use_case.dart';
-import 'package:flutter_project/features/auth/domain/usecases/sign_in_google_use_case.dart';
 import 'package:flutter_project/features/auth/domain/usecases/sign_in_use_case.dart';
 import 'package:flutter_project/features/auth/domain/usecases/sign_out_use_case.dart';
 import 'package:flutter_project/features/auth/domain/usecases/sign_up_use_case.dart';
-import 'package:flutter_project/features/auth/presentaion/cubit/auth/auth_cubit.dart';
-import 'package:flutter_project/features/auth/presentaion/cubit/forgot_password/forgot_password_cubit.dart';
+import 'package:flutter_project/features/auth/presentation/cubit/auth/auth_cubit.dart';
+import 'package:flutter_project/features/auth/presentation/cubit/forgot_password/forgot_password_cubit.dart';
 
-import 'package:flutter_project/features/auth/presentaion/cubit/sign_in/sign_in_cubit.dart';
-import 'package:flutter_project/features/auth/presentaion/cubit/sign_in_google/sign_in_google_cubit.dart';
-import 'package:flutter_project/features/auth/presentaion/cubit/sign_up/sign_up_cubit.dart';
-import 'package:flutter_project/features/book/data/data_sources/remote/best_seller_book_api_service.dart';
-import 'package:flutter_project/features/book/data/data_sources/remote/book_api_service.dart';
-import 'package:flutter_project/features/book/data/repository/best_seller_book_repository_impl.dart';
-import 'package:flutter_project/features/book/data/repository/book_repository_impl.dart';
-import 'package:flutter_project/features/book/domain/repository/best_seller_book_repository.dart';
-import 'package:flutter_project/features/book/domain/repository/book_repository.dart';
-import 'package:flutter_project/features/book/domain/usecases/get_best_seller_book.dart';
-import 'package:flutter_project/features/book/domain/usecases/get_book.dart';
-import 'package:flutter_project/features/book/prensentation/cubit/book/remote/remote_best_seller_book/remote_best_seller_book_cubit.dart';
-import 'package:flutter_project/features/book/prensentation/cubit/book/remote/remote_book/remote_book_cubit.dart';
+import 'package:flutter_project/features/auth/presentation/cubit/sign_in/sign_in_cubit.dart';
+import 'package:flutter_project/features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
+import 'package:flutter_project/features/books/data/data_sources/remote/book_api_data_source/book_api_data_source.dart';
+import 'package:flutter_project/features/books/data/data_sources/remote/firebase_book_data_source/firebase_book_data_source.dart';
+import 'package:flutter_project/features/books/data/data_sources/remote/firebase_book_data_source/firebase_book_data_source_impl.dart';
+import 'package:flutter_project/features/user/data/data_source/firebase_user_book_data_source/user_book_data_source.dart';
+import 'package:flutter_project/features/user/data/data_source/firebase_user_book_data_source/user_book_data_source_impl.dart';
+import 'package:flutter_project/features/books/data/repository/book_repository/book_repository_impl.dart';
+import 'package:flutter_project/features/books/data/repository/firebase_book_repository/firebase_book_repository_impl.dart';
+import 'package:flutter_project/features/books/domain/repository/book_repository.dart';
+import 'package:flutter_project/features/books/domain/repository/firebase_book_repository.dart';
+import 'package:flutter_project/features/books/domain/usecases/create_book_use_case.dart';
+import 'package:flutter_project/features/books/domain/usecases/get_book_use_case.dart';
+import 'package:flutter_project/features/books/presentation/cubit/book/remote/remote_book/remote_book_cubit.dart';
+import 'package:flutter_project/features/user/data/repository/firebase_user_book_repository_impl.dart';
+import 'package:flutter_project/features/user/domain/repository/firebase_user_book_repository.dart';
+import 'package:flutter_project/features/user/domain/usecases/add_book_to_favorite_use_case.dart';
+import 'package:flutter_project/features/user/presentation/cubit/add_book_to_favorite_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -40,15 +44,23 @@ Future<void> initializeDependencies() async {
   //Dependencies
   sl.registerSingleton<FirebaseAuthDataSource>(FirebaseAuthDataSourceImpl(
       FirebaseAuth.instance, FirebaseFirestore.instance));
-  sl.registerSingleton<BookApiService>(BookApiService(sl()));
-  sl.registerSingleton<BestSellerBookApiService>(
-      BestSellerBookApiService(sl()));
+  sl.registerSingleton<BookApiDataSource>(BookApiDataSource(sl()));
+  sl.registerSingleton<RemoteBookDataSource>(RemoteBookDataSourceImpl(FirebaseFirestore.instance));
+  sl.registerSingleton<UserBookDataSource>(UserBookDataSourceImpl(FirebaseFirestore.instance));
+
+
+  // sl.registerSingleton<BestSellerBookApiService>(
+  //     BestSellerBookApiService(sl()));
 
   sl.registerSingleton<FirebaseAuthRepository>(
       FirebaseAuthRepositoryImpl(sl()));
   sl.registerSingleton<BookRepository>(BookRepositoryImpl(sl()));
-  sl.registerSingleton<BestSellerBookRepository>(
-      BestSellerBookRepositoryImpl(sl()));
+  sl.registerSingleton<FirebaseBookRepository>(FirebaseBookRepositoryImpl(sl()));
+  sl.registerSingleton<FirebaseUserBookRepository>(FirebaseUserBookRepositoryImpl(sl()));
+
+
+  // sl.registerSingleton<BestSellerBookRepository>(
+  //     BestSellerBookRepositoryImpl(sl()));
 
   //UseCases
     sl.registerFactory(
@@ -60,12 +72,22 @@ Future<void> initializeDependencies() async {
   );
   sl.registerSingleton<CreateUserUseCase>(CreateUserUseCase(sl()));
   sl.registerSingleton<SignInUseCase>(SignInUseCase(sl()));
+  sl.registerSingleton<SignOutUseCase>(SignOutUseCase(sl()));
+  sl.registerSingleton<IsSignInUseCase>(IsSignInUseCase(sl()));
+  sl.registerSingleton<GetCurrentUidUseCase>(GetCurrentUidUseCase(sl()));
+  
+
+
   sl.registerSingleton<SignUpUseCase>(SignUpUseCase(sl()));
   sl.registerSingleton<SendPasswordResetEmailUseCase>(SendPasswordResetEmailUseCase(sl()));
 
   // sl.registerSingleton<SignInGoogleUsecase>(SignInGoogleUsecase(sl()));
 
-  // sl.registerSingleton<GetBookUseCase>(GetBookUseCase(sl()));
+  sl.registerSingleton<CreateBookUseCase>(CreateBookUseCase(sl()));
+
+  sl.registerSingleton<GetBookUseCase>(GetBookUseCase(sl()));
+  sl.registerSingleton<AddBookToFavoriteUseCase>(AddBookToFavoriteUseCase(sl()));
+
   // sl.registerSingleton<GetBestSellerBookUseCase>(
   //     GetBestSellerBookUseCase(sl()));
 
@@ -75,7 +97,10 @@ Future<void> initializeDependencies() async {
   // sl.registerFactory<SignInGoogleCubit>(() => SignInGoogleCubit(sl()));
   sl.registerFactory<ForgotPasswordCubit>(() => ForgotPasswordCubit(sl()));
 
-  // sl.registerFactory<RemoteBookCubit>(() => RemoteBookCubit(sl()));
+  sl.registerFactory<RemoteBookCubit>(() => RemoteBookCubit(sl(), sl()));
+  sl.registerFactory<AddBookToFavoriteCubit>(() => AddBookToFavoriteCubit(sl(), ));
+
+
   // sl.registerFactory<RemoteBestSellerBookCubit>(
   //     () => RemoteBestSellerBookCubit(sl()));
 }

@@ -34,7 +34,7 @@ final class AppLightTheme implements AppTheme {
   ElevatedButtonThemeData get elevatedButtonThemeData => ElevatedButtonThemeData(
    style: ElevatedButton.styleFrom(
     backgroundColor: Colors.amber,
-    maximumSize: Size(double.infinity, 50)
+    maximumSize: const Size(double.infinity, 50)
    ) 
   );
 

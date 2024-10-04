@@ -21,6 +21,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthWrapperScreen(),
       );
     },
+    FindBookRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FindBookScreen(),
+      );
+    },
+    FindIsbnBookRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FindIsbnBookScreen(),
+      );
+    },
     ForgotPasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -70,6 +82,34 @@ class AuthWrapperRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AuthWrapperRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FindBookScreen]
+class FindBookRoute extends PageRouteInfo<void> {
+  const FindBookRoute({List<PageRouteInfo>? children})
+      : super(
+          FindBookRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FindBookRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FindIsbnBookScreen]
+class FindIsbnBookRoute extends PageRouteInfo<void> {
+  const FindIsbnBookRoute({List<PageRouteInfo>? children})
+      : super(
+          FindIsbnBookRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FindIsbnBookRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
