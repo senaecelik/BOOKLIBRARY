@@ -1,15 +1,16 @@
+import 'package:flutter_project/features/books/data/model/book_base_model.dart';
 import 'package:flutter_project/features/books/data/model/book_detail_model.dart';
 
 class AddBookToFavoriteModel {
   final String userId;
-  final BookModelDetail bookEntity; // Bu değişikliği yapmalısınız
+  final BookBaseModel bookEntity; // Bu değişikliği yapmalısınız
 
   AddBookToFavoriteModel({
     required this.userId,
     required this.bookEntity,
   });
 
-  factory AddBookToFavoriteModel.fromBookModelDetail(String userId, BookModelDetail bookModel) {
+  factory AddBookToFavoriteModel.fromBookModelDetail(String userId, BookBaseModel bookModel) {
     return AddBookToFavoriteModel(
       userId: userId,
       bookEntity: bookModel,
@@ -20,7 +21,7 @@ class AddBookToFavoriteModel {
   factory AddBookToFavoriteModel.fromJson(Map<String, dynamic> json) {
     return AddBookToFavoriteModel(
       userId: json['userId'] as String,
-      bookEntity: BookModelDetail.fromJson(json['bookEntity'] as Map<String, dynamic>),
+      bookEntity: BookBaseModel.fromJson(json['bookEntity'] as Map<String, dynamic>),
     );
   }
 

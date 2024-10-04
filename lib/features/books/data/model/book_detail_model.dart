@@ -1,8 +1,9 @@
+import 'package:flutter_project/features/books/data/model/book_base_model.dart';
 import 'package:flutter_project/features/books/data/model/image_link_model.dart';
 import 'package:flutter_project/features/books/data/model/industry_identifier_model.dart';
 import 'package:flutter_project/features/books/domain/entities/book_detail_entity.dart';
 
-class BookModelDetail extends BookEntityDetail {
+class BookModelDetail implements BookEntityDetail , BookBaseModel  {
   @override
   final String? title;
   @override

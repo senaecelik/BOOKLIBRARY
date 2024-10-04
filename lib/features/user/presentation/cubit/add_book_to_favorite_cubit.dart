@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/features/auth/domain/entity/user_static_model.dart';
+import 'package:flutter_project/features/books/data/model/book_base_model.dart';
 import 'package:flutter_project/features/books/data/model/book_detail_model.dart';
 import 'package:flutter_project/features/books/domain/entities/book_detail_entity.dart';
 import 'package:flutter_project/features/user/data/model/add_book_to_favorite_model.dart';
@@ -19,9 +20,9 @@ class AddBookToFavoriteCubit extends Cubit<AddBookToFavoriteState> {
   emit(AddBookToFavoriteLoading()); // Yükleniyor durumu
   try {
     // BookEntityDetail'den BookModelDetail'e dönüşüm yapmalısınız
-    BookModelDetail bookModelDetail = BookModelDetail.fromEntity(favBook);
+
     AddBookToFavoriteModel addBookToFavoriteModel =
-        AddBookToFavoriteModel.fromBookModelDetail(UserStaticModel.uid!, bookModelDetail);
+        AddBookToFavoriteModel.fromBookModelDetail(UserStaticModel.uid!, favBook);
 
     // Kitabı favorilere ekle
     _addBookToFavoriteUseCase.call(addBookToFavoriteModel).then((_) {

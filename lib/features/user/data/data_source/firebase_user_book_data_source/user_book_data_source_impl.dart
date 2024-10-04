@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/features/books/domain/entities/book_base_entity.dart';
 import 'package:flutter_project/features/user/data/data_source/firebase_user_book_data_source/user_book_data_source.dart';
 import 'package:flutter_project/features/books/data/model/book_detail_model.dart';
 import 'package:flutter_project/features/books/data/model/industry_identifier_model.dart';
@@ -11,7 +12,7 @@ class UserBookDataSourceImpl extends UserBookDataSource {
   UserBookDataSourceImpl(this._firebaseFirestore);
 
   @override
-  Future<void> addBookToFavorites(String userId, BookEntityDetail book) async {
+  Future<void> addBookToFavorites(String userId, BookBaseEntity book) async {
     final favoritesCollection = _firebaseFirestore
         .collection("users")
         .doc(userId)
@@ -22,7 +23,7 @@ class UserBookDataSourceImpl extends UserBookDataSource {
         : book.title ?? DateTime.now().toString();
 
     // BookEntityDetail'den BookModelDetail'e dönüştürme
-    final favBook = BookModelDetail.fromEntity(book).toJson();
+    final favBook = BookBaseEntity.fromEntity(book).toJson();
 
     try {
       // Belgenin varlığını kontrol et
@@ -40,7 +41,7 @@ class UserBookDataSourceImpl extends UserBookDataSource {
   }
 
   @override
-  Future<void> markBookAsRead(String userId, BookEntityDetail book) async {
+  Future<void> markBookAsRead(String userId, BookBaseEntity book) async {
     final readBooksCollection = _firebaseFirestore
         .collection("users")
         .doc(userId)
@@ -73,7 +74,7 @@ class UserBookDataSourceImpl extends UserBookDataSource {
   }
 
   @override
-  Future<void> addToWantToRead(String userId, BookEntityDetail book) async {
+  Future<void> addToWantToRead(String userId, BookBaseEntity book) async {
     final wantToReadCollection = _firebaseFirestore
         .collection("users")
         .doc(userId)
