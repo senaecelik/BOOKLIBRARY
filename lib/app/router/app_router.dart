@@ -12,7 +12,7 @@ import 'package:flutter_project/features/welcome/presentation/welcome_screen.dar
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
-final class AppRouter extends _$AppRouter {
+final class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: SplashRoute.page, initial: true),

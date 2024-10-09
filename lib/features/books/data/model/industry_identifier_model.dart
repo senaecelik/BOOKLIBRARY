@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:flutter_project/features/books/domain/entities/industry_identifier_entity.dart';
 
 class IndustryIdentifierModel extends IndustryIdentifierEntity {

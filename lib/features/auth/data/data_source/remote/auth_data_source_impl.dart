@@ -91,10 +91,14 @@ Future<void> signInWithEmailAndPassword(UserEntity user) async {
         ));
       }
     } else {
-      print("Email ve şifre alanları boş olamaz.");
+      if (kDebugMode) {
+        print("Email ve şifre alanları boş olamaz.");
+      }
     }
   } catch (e) {
-    print("Oturum açma hatası: ${e.toString()}");
+    if (kDebugMode) {
+      print("Oturum açma hatası: ${e.toString()}");
+    }
     rethrow; // Hata fırlatma
   }
 }

@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/core/resources/data_state.dart';
 import 'package:flutter_project/features/books/domain/entities/book_detail_entity.dart';
-import 'package:flutter_project/features/books/domain/entities/book_entity.dart';
 import 'package:flutter_project/features/books/domain/usecases/create_book_use_case.dart';
 import 'package:flutter_project/features/books/domain/usecases/get_book_use_case.dart';
 

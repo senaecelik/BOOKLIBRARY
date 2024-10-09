@@ -2,12 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/features/auth/domain/entity/user_static_model.dart';
-import 'package:flutter_project/features/books/data/model/book_detail_model.dart';
 import 'package:flutter_project/features/books/domain/entities/book_detail_entity.dart';
-import 'package:flutter_project/features/user/data/data_source/firebase_user_book_data_source/user_book_data_source.dart';
 import 'package:flutter_project/features/books/presentation/cubit/book/remote/remote_book/remote_book_cubit.dart';
-import 'package:flutter_project/features/user/data/model/add_book_to_favorite_model.dart';
-import 'package:flutter_project/features/user/presentation/cubit/add_book_to_favorite_cubit.dart';
+import 'package:flutter_project/features/user/domain/entity/add_book_entity.dart';
+
+import 'package:flutter_project/features/user/presentation/cubit/user_mark_as_read_cubit.dart';
 import 'package:flutter_project/injection_container.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -111,22 +110,9 @@ class _FindIsbnBookScreenState extends State<FindIsbnBookScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                AddToFavoriteButton(favoriteBook: state.books!),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Okundu olarak işaretle
-                                    final userBookDataSource =
-                                        sl<UserBookDataSource>();
-                                    userBookDataSource.markBookAsRead(
-                                        UserStaticModel.uid!, book);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              "Kitap okundu olarak işaretlendi.")),
-                                    );
-                                  },
-                                  child: const Text("Okundu Olarak İşaretle"),
-                                ),
+                                // AddToFavoriteButton(favoriteBook: state.books!),
+                                MarkAsReadButton(
+                                    bookEntityDetail: state.books!),
                               ],
                             ),
                           ],
@@ -150,6 +136,86 @@ class _FindIsbnBookScreenState extends State<FindIsbnBookScreen> {
   }
 }
 
+class MarkAsReadButton extends StatefulWidget {
+  final BookEntityDetail bookEntityDetail;
+  const MarkAsReadButton({
+    super.key,
+    required this.bookEntityDetail,
+  });
+
+  @override
+  State<MarkAsReadButton> createState() => _MarkAsReadButtonState();
+}
+
+class _MarkAsReadButtonState extends State<MarkAsReadButton> {
+  late UserMarkAsReadCubit _userMarkAsReadCubit;
+
+  @override
+  void initState() {
+    _userMarkAsReadCubit = sl<UserMarkAsReadCubit>();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => _userMarkAsReadCubit,
+      child: BlocConsumer<UserMarkAsReadCubit, UserMarkAsReadState>(
+        listener: (context, state) {
+          if (state is UserMarkAsReadSuccess) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text("Favorilere eklendi")));
+          } else if (state is UserMarkAsReadError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    AddBookEntity addBookEntity = AddBookEntity(
+                        userId: UserStaticModel.uid!,
+                        bookEntity: widget.bookEntityDetail);
+                    _userMarkAsReadCubit.addFavorite(book: addBookEntity);
+                  },
+                  icon: const Icon(Iconsax.heart)),
+              ElevatedButton.icon(
+                icon: state is UserMarkAsReadLoading
+                    ? const CircularProgressIndicator.adaptive()
+                    : const Icon(Iconsax.save_2),
+                onPressed: () {
+                  AddBookEntity addBookEntity = AddBookEntity(
+                      userId: UserStaticModel.uid!,
+                      bookEntity: widget.bookEntityDetail);
+
+                  _userMarkAsReadCubit.markAsReadBook(book: addBookEntity);
+                },
+                label: const Text("Okundu Olarak İşaretle"),
+              ),
+
+               ElevatedButton.icon(
+                icon: state is UserMarkAsReadLoading
+                    ? const CircularProgressIndicator.adaptive()
+                    : const Icon(Iconsax.save_2),
+                onPressed: () {
+                  AddBookEntity addBookEntity = AddBookEntity(
+                      userId: UserStaticModel.uid!,
+                      bookEntity: widget.bookEntityDetail);
+
+                  _userMarkAsReadCubit.addWantToRead(book: addBookEntity);
+                },
+                label: const Text("Okumak İstiyorum"),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
 class AddToFavoriteButton extends StatefulWidget {
   final BookEntityDetail favoriteBook;
   const AddToFavoriteButton({
@@ -162,37 +228,37 @@ class AddToFavoriteButton extends StatefulWidget {
 }
 
 class _AddToFavoriteButtonState extends State<AddToFavoriteButton> {
-  late AddBookToFavoriteCubit _addBookToFavoriteCubit;
+  late UserMarkAsReadCubit _userMarkAsReadCubit;
 
   @override
   void initState() {
-    _addBookToFavoriteCubit = sl<AddBookToFavoriteCubit>();
+    _userMarkAsReadCubit = sl<UserMarkAsReadCubit>();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => _addBookToFavoriteCubit,
-      child: BlocConsumer<AddBookToFavoriteCubit, AddBookToFavoriteState>(
+      create: (context) => _userMarkAsReadCubit,
+      child: BlocConsumer<UserMarkAsReadCubit, UserMarkAsReadState>(
         listener: (context, state) {
-          if (state is AddBookToFavoriteDone) {
+          if (state is UserMarkAsReadSuccess) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
-          } else if (state is AddBookToFavoriteError) {
+                .showSnackBar(const SnackBar(content: Text("Favorilere eklendi")));
+          } else if (state is UserMarkAsReadError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         builder: (context, state) {
-          return FilledButton.icon(
-            icon: state is AddBookToFavoriteLoading ? CircularProgressIndicator.adaptive(): Icon(Iconsax.heart),
-            onPressed: () {
-              // Favorilere ekle
-              _addBookToFavoriteCubit.addBookToFavorite(widget.favoriteBook);
-            },
-            label: const Text("Favorilere Ekle"),
-          );
+          return IconButton(
+              onPressed: () {
+                AddBookEntity addBookEntity = AddBookEntity(
+                    userId: UserStaticModel.uid!,
+                    bookEntity: widget.favoriteBook);
+                _userMarkAsReadCubit.addFavorite(book: addBookEntity);
+              },
+              icon: const Icon(Iconsax.heart));
         },
       ),
     );

@@ -1,12 +1,20 @@
+
+// ignore_for_file: overridden_fields
+
 import 'package:flutter_project/features/books/data/model/image_link_model.dart';
 import 'package:flutter_project/features/books/data/model/industry_identifier_model.dart';
 import 'package:flutter_project/features/books/domain/entities/book_base_entity.dart';
 
 class BookBaseModel extends BookBaseEntity {
+  @override
   final String? title;
+  @override
   final List<String>? authors;
+  @override
   final ImageLinksModel? imageLinks;
+  @override
   final List<String>? categories;
+  @override
   final List<IndustryIdentifierModel>? industryIdentifiers;
 
   const BookBaseModel({
@@ -17,7 +25,7 @@ class BookBaseModel extends BookBaseEntity {
     this.industryIdentifiers,
   });
 
-  factory BookBaseModel.fromJson(Map<String, dynamic> json) => BookBaseModel(
+  static BookBaseModel fromJson(Map<String, dynamic> json) => BookBaseModel(
         title: json["title"],
         authors: json["authors"] == null
             ? []
@@ -33,6 +41,7 @@ class BookBaseModel extends BookBaseEntity {
             ? []
             : List<IndustryIdentifierModel>.from(json["industryIdentifiers"]
                 .map((x) => IndustryIdentifierModel.fromJson(x))),
+              
       );
 
   Map<String, dynamic> toJson() => {

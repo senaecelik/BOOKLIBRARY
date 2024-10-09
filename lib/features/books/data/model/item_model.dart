@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:flutter_project/features/books/data/model/book_detail_model.dart';
 import 'package:flutter_project/features/books/domain/entities/item_entity.dart';
 

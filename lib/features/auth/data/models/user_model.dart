@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_project/features/auth/domain/entity/user_entity.dart';
 

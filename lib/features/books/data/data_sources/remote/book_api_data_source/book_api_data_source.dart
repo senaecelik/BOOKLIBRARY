@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_project/app/index.dart';
 import 'package:flutter_project/core/constant/api_constant.dart';
 import 'package:flutter_project/features/books/data/model/book_model.dart';
-import 'package:flutter_project/features/books/data/model/books_model.dart';
 import 'package:retrofit/retrofit.dart';
 part 'book_api_data_source.g.dart';
 

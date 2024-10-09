@@ -16,10 +16,9 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   #Firebase 
-  cloud_firestore: ^5.1.0
-  firebase_core: ^3.2.0
+  cloud_firestore: ^5.4.4
+  firebase_core: ^3.6.0
   firebase_auth: ^5.1.2
-  google_sign_in: ^6.2.1
 
 
   #Network Dependencies
@@ -67,7 +66,6 @@ dependencies:
   lottie: ^3.1.1
   google_fonts: ^6.2.1
   iconsax: ^0.0.8
-  simple_barcode_scanner: ^0.1.1
   anim_search_bar: ^2.0.3
     
   

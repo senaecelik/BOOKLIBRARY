@@ -1,7 +1,5 @@
-import 'package:flutter_project/features/books/data/model/image_link_model.dart';
+
 import 'package:flutter_project/features/books/domain/entities/book_base_entity.dart';
-import 'package:flutter_project/features/books/domain/entities/image_links_entity.dart';
-import 'package:flutter_project/features/books/domain/entities/industry_identifier_entity.dart';
 
 class BookEntityDetail  extends BookBaseEntity{
 

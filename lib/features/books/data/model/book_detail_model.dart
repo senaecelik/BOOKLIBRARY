@@ -42,7 +42,8 @@ class BookModelDetail implements BookEntityDetail , BookBaseModel  {
   final String? canonicalVolumeLink;
   @override
   final List<String>? categories;
-
+  @override
+  
   const BookModelDetail({
     this.title,
     this.authors,
@@ -97,6 +98,7 @@ class BookModelDetail implements BookEntityDetail , BookBaseModel  {
             : List<String>.from(json["categories"].map((x) => x)),
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         "title": title,
         "authors":
@@ -122,6 +124,7 @@ class BookModelDetail implements BookEntityDetail , BookBaseModel  {
         "categories": categories == null
             ? []
             : List<dynamic>.from(categories!.map((x) => x)),
+        
       };
 factory BookModelDetail.fromEntity(BookEntityDetail entity) {
   return BookModelDetail(

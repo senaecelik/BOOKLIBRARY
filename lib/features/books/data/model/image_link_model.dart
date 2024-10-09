@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:flutter_project/features/books/domain/entities/image_links_entity.dart';
 
 class ImageLinksModel extends ImageLinksEntity {
